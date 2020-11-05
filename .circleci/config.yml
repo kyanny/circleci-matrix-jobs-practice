@@ -1,0 +1,20 @@
+version: 2.1
+
+jobs:
+  run-test:
+    parameters:
+      ruby-version:
+        type: string
+    docker:
+      - image: circleci/ruby:<< parameters.ruby-version >>
+    steps:
+      - checkout
+      - run: "ruby test_add.rb"
+
+workflows:
+  build:
+    jobs:
+      - run-test:
+          matrix:
+            parameters:
+              ruby-version: ["1.8-stretch", "2.7.2"]
